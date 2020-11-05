@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <iomanip>
 #include <math.h>
 using namespace std;
@@ -11,19 +11,19 @@ int main()
 	x = a;
 	h = (b - a) / 10;
 	cout << setw(15) << "X" << setw(15) << "Y" << setw(15) << "S" << endl;
-	do
+	while (x <= b + h / 2)
 	{
 		p = s = 1;
 		for (i = 1; i <= n; i++)
 		{
-			p *= x*x / 2*i;
+			p *= x * x / 2 * i;
 			s += p;
 		}
 		y = (exp(x) + exp(-x)) / 2;
-		cout << setw(15) << x  << setw(15) << y << setw(15) << s << endl;
+		cout << setw(15) << x << setw(15) << y << setw(15) << s << endl;
 		cout << "          ---------------------------------------" << endl;
-		x += h; 
-	} while (x <= b + h / 2);
+		x += h;
+	}
 	cout << endl;
 	return 0;
 }
