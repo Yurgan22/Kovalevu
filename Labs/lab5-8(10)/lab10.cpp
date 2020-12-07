@@ -1,4 +1,4 @@
-﻿#pragma warning(disable:4996)
+#pragma warning(disable:4996)
 #include<iostream>  
 #include<stdio.h>  
 #include<conio.h>
@@ -9,8 +9,9 @@
 
 using namespace std;
 int count_day_in_months[13] = { 0,31,59,90,120,151,181,212,243,273,304,334,365 };
-FILE* fl;
+FILE* fl, * ft;
 char name[20];
+char namet[30];
 typedef struct
 {
 	char name[20];
@@ -22,13 +23,15 @@ typedef struct
 tovari tov[100];
 void sorti(tovari[], int);
 uint date_days(uint, uint, uint);
-int dd = 16, mm = 11, yy = 2020, n;
+int dd = 7, mm = 12, yy = 2020, n;
+int kol = 0;
 int i = 0;       // Число введенных структур 
 int menu();        // Меню 
 void nnf();        // Ввести имя файла 
 void newf();       // Создать новый файл
 void spisok();     // Ввести список 
 void opf();        // Открыть файл 
+void opf1();
 void resc();       // Вывести результат на экран 
 void resf();       // Вывести результат в файл 
 
@@ -47,7 +50,8 @@ int main()
 		case 4: opf();    break;
 		case 5: resc();   break;
 		case 6: resf();   break;
-		case 7: return 0;
+		case 7: opf1();   break;
+		case 8: return 0;
 		default: "Выберете правильный вариант!";
 		}
 		puts("Нажмите любую клавишу, чтобы продолжить...");
@@ -61,10 +65,11 @@ int menu() // Меню
 	cout << "1. Ввод название файла" << endl;
 	cout << "2. Создание нового файла" << endl;
 	cout << "3. Ввод списка товаров" << endl;
-	cout << "4. Открыть файл" << endl;
+	cout << "4. Открыть файл ввода" << endl;
 	cout << "5. Вывести результат на экран" << endl;
 	cout << "6. Вывести результат в файл" << endl;
-	cout << "7. Выход" << endl;
+	cout << "7. Открыть файл вывода" << endl;
+	cout << "8. Выход" << endl;
 	int i;
 	cin >> i;
 	return i;
@@ -156,8 +161,6 @@ void resc()      // Вывести результат на экран
 
 void resf()      // Вывести результат в файл 
 {
-	char namet[30];
-	FILE* ft;
 	cout << "Введите имя файла " << endl;
 	cin >> namet;
 	if ((ft = fopen(namet, "w")) == NULL)
@@ -169,6 +172,7 @@ void resf()      // Вывести результат в файл
 	for (int i = 0; i < n; i++)
 		if (tov[i].days > 30 && tov[i].price > 100000)
 		{
+			kol++;
 			strcpy(s, tov[i].name);
 			strcat(s, " Цена - ");
 			sprintf(str, "%d", tov[i].price);
@@ -205,4 +209,22 @@ void sorti(tovari a[], int m) // Сортировка в алфавитном п
 				a[i] = a[j];
 				a[j] = temp;
 			}
+}
+
+void opf1()      // Открыть файл Вывода
+{
+	if ((ft = fopen(namet, "rb")) == NULL)
+	{
+		cout << "Oshibka pri otkritii" << endl;
+		exit(1);
+	}
+	char std[111];
+	int i = 0;
+	while (i<kol)
+	{
+		fgets(std, 110, ft);
+		cout << std << endl;
+		i++;
+	}
+	fclose(ft);
 }
