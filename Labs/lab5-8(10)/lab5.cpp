@@ -33,7 +33,7 @@ int main()
 	for (int i = 0; i < n; i++)
 		cout << i + 1 << ") " << *(b + i) << endl;
 	for (int i = 0; i < n; i++)
-		delete [](matr + i);
+		delete []*(matr + i);
 	delete[]matr;
 	matr = NULL;
 	delete[]b;
